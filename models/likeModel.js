@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+module.exports = mongoose.model('Comment',commentSchema);
 
 const likeSchema = new mongoose.Schema({
     user_id:{
@@ -13,4 +13,4 @@ const likeSchema = new mongoose.Schema({
     },
 });
 
-module.exports = mongoose.model('Like',likeSchema);
+export default mongoose.model('Like',likeSchema);
