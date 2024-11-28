@@ -30,7 +30,7 @@ export const registerUser = async(req, res) => {
             });
         }
 
-        const hashedPassword = await bcrypt.hash(password, process.env.BCRYPT_SALT);
+        const hashedPassword = await bcrypt.hash(password, 16);
         
         const user =  new User({
             name,
@@ -56,8 +56,10 @@ export const registerUser = async(req, res) => {
 // random secret token
 const secretToken = crypto.randomBytes(16).toString('hex');
 
+process.env.SECRET_TOKEN = secretToken;
+
 const generateAccessToken = async(user) => {
-    const token = jwt.sign(user, secretToken, { expiresIn:"24h" });
+    const token = jwt.sign(user, secretToken, { expiresIn:"1h" });
     return token;
 }
 
@@ -103,6 +105,23 @@ export const loginUser = async(req, res) => {
             data: user
         });
 
+    } catch (error) {
+        return res.status(400).json({
+            success: false,
+            description: error.message
+        });
+    }
+}
+
+export const getProfile = async(req,res) => {
+    try {
+        const user_id = req.user._id;
+        const userData = await User.findOne({ _id: user_id });
+
+        return res.status(200).json({
+            success: true,
+            description: req.user
+        });
     } catch (error) {
         return res.status(400).json({
             success: false,
