@@ -5,9 +5,8 @@ import auth from '../middleware/authMiddleware.js';
 
 const router = express();
 
-router.post('/register',registerValidator, registerUser);
-router.post('/login',loginValidator, loginUser);
-
+router.post('/register', registerValidator, registerUser);
+router.post('/login', loginValidator, loginUser);
 router.get('/profile', auth, getProfile);
 
 export default router;
