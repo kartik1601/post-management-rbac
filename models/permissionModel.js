@@ -1,15 +1,14 @@
 import mongoose from 'mongoose';
 
-const permissionSchema = new mongoose.Schema({
-    user_id:{
-        type:mongoose.Schema.Types.ObjectId,
+const PermissionSchema = new mongoose.Schema({
+    permission_name:{
+        type:String,
         required:true,
-        ref: 'User'
     },
-    permissions:[{
-        permission_feature: String,
-        permission_types: [String], // CRUD
-    }]
+    is_default:{
+        type:Number,
+        default: 0,
+    }
 });
 
-export default mongoose.model('Permission',permissionSchema);
+export default mongoose.model('Permission',PermissionSchema);
