@@ -9,10 +9,11 @@ const postSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    categories:{
-        type:Array,
-        required:false
-    },
+    categories:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Category',
+        required: false
+    }],
 });
 
 export default mongoose.model('Post',postSchema);

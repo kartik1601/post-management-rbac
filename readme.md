@@ -15,7 +15,7 @@
 ### - Moderator : Admin
 ### - User : Admin | Moderator*
 ### - Post : Admin | Moderator* | Editor* | User
-### - Categories : Admin | Moderator* | Editor* | User
+### - Categories : Admin | Moderator* | Editor* 
 ### - Comments : Admin | Moderator* | Editor* | User
 ### - Likes : Admin | Moderator* | Editor* | User
 

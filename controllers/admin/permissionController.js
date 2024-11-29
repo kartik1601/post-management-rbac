@@ -18,7 +18,12 @@ export const addPermission = async(req,res) => {
 
         const { permission_name } = req.body;
 
-        const isExistPermission = await Permission.findOne({ permission_name });
+        const isExistPermission = await Permission.findOne({ 
+            permission_name: {
+                $regex: permission_name,
+                $options: 'i'
+            } 
+        });
 
         if(isExistPermission){
             return res.status(201).json({
@@ -112,6 +117,15 @@ export const deletePermission = async(req,res) => {
 
         const { id } = req.body;
 
+        const isExist = await Permission.findOne({ _id: id });
+
+        if(!isExist){
+            return res.status(200).json({
+                success: false,
+                description: 'Category does not exists!'
+            });
+        }
+
         await Permission.findByIdAndDelete({ _id: id });
 
         return res.status(200).json({
@@ -149,10 +163,13 @@ export const updatePermission = async(req,res) => {
             });
         }
 
-        const isExistPermission = await Permission.findOne({ 
-            _id: {$ne: id}, 
-            permission_name 
-        });
+        const isExistPermission = await Permission.findOne( 
+            { _id: {$ne: id}}, 
+            { permission_name: {
+                $regex: permission_name,
+                $options: 'i'
+            } }
+        );
 
         if(isExistPermission){
             return res.status(201).json({
